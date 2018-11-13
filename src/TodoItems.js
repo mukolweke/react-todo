@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 class TodoItems extends Component {
-    createTasks(item) {
-        return <li key={item.key}>{item.text}</li>
+    createTasks = (item) => {
+        return <li key={item.key} onClick={() => {
+            this.props.deleteItem(item.key)
+        }}>{item.text}</li>
     }
 
     render() {
-        let todoEntries = this.props.entries
-        let listItems = todoEntries.map(this.createTasks)
+        let todoEntries = this.props.entries;
+        let listItems = todoEntries.map(this.createTasks);
 
         return <ul className="theList">{listItems}</ul>
     }
