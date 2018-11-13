@@ -45,6 +45,8 @@ class App extends Component {
                     handleInput={this.handleInput}  //handles data on input filed on change
                     currentItem={this.state.currentItem} // display the value of the state set
                 />
+
+                <TodoItems entries={this.state.items} />
             </div>
         );
     }
