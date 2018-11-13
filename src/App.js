@@ -1,28 +1,53 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import TodoList from './TodoList.js';
+import TodoItems from './TodoItems.js';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    constructor() {
+        super();
+        this.state = {
+            items: [],
+            currentItem: {text: '', key: ''},
+        }
+    }
+
+    handleInput = (e) => {
+        let itemText = e.target.value;
+        let currentItem = { text: itemText, key: Date.now() };
+        this.setState({
+            currentItem,
+        })
+    }
+
+    addItem = (e) => {
+        e.preventDefault();
+        let newItem = this.state.currentItem;
+
+        if (newItem.text !== '') {
+            console.log(newItem);
+            let items = [...this.state.items, newItem];
+            this.setState({
+                items: items,
+                currentItem: { text: '', key: '' },
+            })
+        }
+    }
+
+    inputElement= React.createRef();
+
+    render() {
+        return (
+            <div className="App">
+                <TodoList
+                    inputElement={this.inputElement} //refers to the element
+                    addItem={this.addItem} // handles the click on add
+                    handleInput={this.handleInput}  //handles data on input filed on change
+                    currentItem={this.state.currentItem} // display the value of the state set
+                />
+            </div>
+        );
+    }
 }
 
 export default App;
